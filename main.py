@@ -1,14 +1,22 @@
-from typing import Union
-from fastapi import FastAPI
+import asyncio
+from fastapi import FastAPI, Depends
+from fastapi.responses import JSONResponse
+from sqlalchemy.orm import Session
+
+from .utils import get_db
+from .models import User
+from .utils import send_confirmation_email
 
 app = FastAPI()
 
+@app.post("/register")
+async def register_user(email: str, db: Session = Depends(get_db)):
+    new_user = User(email=email)
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+    # Asynchronously send the confirmation email
+    asyncio.create_task(send_confirmation_email(email))
 
-
-@app.get("/items/{item_id}")
-def read_item_kiron(item_id: int, q: str = None):
-    return {"item_id": item_id, "q": q}
+    return JSONResponse(content={"message": "Registration Success."})
