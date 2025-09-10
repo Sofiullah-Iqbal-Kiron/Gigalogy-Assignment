@@ -6,8 +6,8 @@ This project demonstrates a REST API built with FastAPI that allows user registr
 
 ## Prerequisites
 
-- Python 3.x
-- Docker
+-   Python 3.x
+-   Docker
 
 ## Installation
 
