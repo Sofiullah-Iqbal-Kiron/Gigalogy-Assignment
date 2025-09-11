@@ -20,9 +20,7 @@ class User(Base):
     is_superuser = Column(Boolean, default=False, nullable=False)
 
     last_login = Column(DateTime(timezone=True), onupdate=func.now())
-    joined_at = Column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
-    )
+    joined_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 
     def __repr__(self):
         return f"<User id={self.id} email={self.email!r}>"

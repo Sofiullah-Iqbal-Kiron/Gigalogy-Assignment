@@ -17,7 +17,7 @@ from src.core.jwt import (
     SECRET_KEY,
     ALGORITHM,
 )
-from core.utils import verify_password
+from src.core.hash import verify_password
 
 
 router = APIRouter()
